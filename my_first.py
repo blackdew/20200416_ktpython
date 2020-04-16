@@ -29,11 +29,11 @@ print("메일 내용입니다.")
 print("*" * 50)
 print(complete_message)
 
-f = open('./mail.txt', 'w')
-f.write(complete_message)
-f.close()
+# f = open('./mail.txt', 'w')
+# f.write(complete_message)
+# f.close()
 
-with open('./mail.txt', 'w') as f:
+with open('./mail.txt', 'w', encoding="utf-8") as f:
     f.write(complete_message)
 
 # 메일을 바로 발송
