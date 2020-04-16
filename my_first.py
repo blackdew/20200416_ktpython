@@ -22,13 +22,19 @@ lotto = make_lotto()
 # 메일 내용을 완성
 complete_message = message.format(who, lotto)
 
-# 출력한다.
+# 화면에 출력한다.
 print()
 print("*" * 50)
 print("메일 내용입니다.")
 print("*" * 50)
 print(complete_message)
 
+f = open('./mail.txt', 'w')
+f.write(complete_message)
+f.close()
+
+with open('./mail.txt', 'w') as f:
+    f.write(complete_message)
 
 # 메일을 바로 발송
 # send_mail(complete_message)
