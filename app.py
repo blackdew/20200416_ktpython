@@ -4,52 +4,8 @@ app = Flask("flask")
 
 @app.route("/")
 def index():
-    html = """
-<!DOCTYPE htm>
-<head>
-    <title>WEB - Welcome</title>
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <style>
-        body{
-            font-family: 'Press Start 2P', cursive;
-        }
-        h1{
-            border-bottom:30px solid blue;
-            padding:10px;
-        }
-        ol{
-            border-right:1px dotted green;
-        }
-        #container{
-            display:grid;
-            grid-template-columns:100px 1fr;
-        }
-        h1{
-            margin-bottom:0;
-        }
-        ol{
-            margin-top:0;
-        }
-    </style>
-</head>
-<body class="animated bouncein">
-    <h1><a href="index.html">WEB2</a></h1>
-    <div id="container">
-        <ol>
-            <li><a href="1.html">HTML</a></li>
-            <li><a href="2.html">CSS</a></li>
-            <li><a href="3.html">JS</a></li>
-            <li><a href="4.html">python</a></li>
-        </ol>
-        <div>
-            <h2>Welcome</h2>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iusto, ad!
-        </div>
-    </div>
-</body>
-</html>    
-"""
+    # views/index.html 에서 파일을 받아오자 
+    with open('views/index.html', 'r') as f:
+        html = f.read()
+    
     return html
-#     return "Hello, Flask World"
