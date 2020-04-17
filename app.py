@@ -16,8 +16,9 @@ def get_template(filename):
 
 @app.route("/")
 def index():
+    id = request.args.get('id', '')
     template = get_template('template.html')
-    return template.format('Welcome', 'Welcome Python Class...')
+    return template.format('Welcome ' + id, 'Welcome Python Class...')
 
 @app.route("/html")
 def html():
@@ -52,4 +53,4 @@ def login():
             return template.format("<p>패스워드를 확인해 주세요</p>")
             
         # 로그인 성공에는 메인으로
-        return redirect("/")
+        return redirect("/?id=" + m[0]['id'])
