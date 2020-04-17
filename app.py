@@ -3,6 +3,11 @@ from flask import request, redirect
 
 app = Flask("flask")
 
+members = [
+    {"id": "sookbun", "pw": "111111"},
+    {"id": "duru", "pw": "222222"},
+]
+
 def get_template(filename):
     with open('views/' + filename, 'r', encoding="utf-8") as f:
         template = f.read()
@@ -36,4 +41,11 @@ def login():
     if request.method == 'GET':
         return template
     elif request.method == 'POST':
+        # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
+        m = [e for e in members if e['id'] == request.form['id']]
+        if len(m) == 0:
+            return template + "회원이 아닙니다."
+            
+        
+        # 로그인 성공에는 메인으로
         return redirect("/")
