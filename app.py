@@ -24,22 +24,38 @@ def get_template(filename):
 def index():
     id = request.args.get('id', '')
     template = get_template('template.html')
-    return template.format('Welcome ' + id, 'Welcome Python Class...')
+    
+    title = 'Welcome ' + id
+    content = 'Welcome Python Class...'
+    menu = get_menu()
+    return template.format(title, content, menu)
 
-@app.route("/html")
+@app.route("/HTML")
 def html():
     template = get_template('template.html')
-    return template.format('HTML', 'HTML is...')
+    
+    title = 'HTML'
+    content = 'HTML is...'
+    menu = get_menu()
+    return template.format(title, content, menu)
 
 @app.route("/CSS")
 def css():
     template = get_template('template.html')
-    return template.format('CSS', 'CSS is...')
+    
+    title = 'CSS'
+    content = 'CSS is...'
+    menu = get_menu()
+    return template.format(title, content, menu)
 
 @app.route("/Javascript")
 def javascript():
     template = get_template('template.html')
-    return template.format('Javascript', 'Javascript is...')
+    
+    title = 'Javascript'
+    content = 'Javascript is...'
+    menu = get_menu()
+    return template.format(title, content, menu)
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
