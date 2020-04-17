@@ -40,6 +40,11 @@ def html(title):
 
     return template.format(title, content, menu)
 
+@app.route("/delete/<title>")
+def delete(title):
+    os.remove(f"content/{title}")
+    return redirect("/")
+
 @app.route("/create", methods=['GET', 'POST'])
 def create():
     template = get_template('create.html')
