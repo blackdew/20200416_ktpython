@@ -1,6 +1,6 @@
 import os
 from flask import Flask
-from flask import request, redirect
+from flask import request, redirect, abort
 
 app = Flask("flask")
 
@@ -34,6 +34,9 @@ def index():
 def html(title):
     template = get_template('template.html')
     menu = get_menu()
+    
+    if title not in menu:
+        return abort(404)
 
     with open(f'content/{title}', 'r') as f:
         content = f.read()
