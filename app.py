@@ -30,31 +30,14 @@ def index():
     menu = get_menu()
     return template.format(title, content, menu)
 
-@app.route("/HTML")
-def html():
+@app.route("/<title>")
+def html(title):
     template = get_template('template.html')
-    
-    title = 'HTML'
-    content = 'HTML is...'
     menu = get_menu()
-    return template.format(title, content, menu)
 
-@app.route("/CSS")
-def css():
-    template = get_template('template.html')
-    
-    title = 'CSS'
-    content = 'CSS is...'
-    menu = get_menu()
-    return template.format(title, content, menu)
+    with open(f'content/{title}', 'r') as f:
+        content = f.read()
 
-@app.route("/Javascript")
-def javascript():
-    template = get_template('template.html')
-    
-    title = 'Javascript'
-    content = 'Javascript is...'
-    menu = get_menu()
     return template.format(title, content, menu)
 
 @app.route("/login", methods=['GET', 'POST'])
