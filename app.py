@@ -44,7 +44,11 @@ def html(title):
 def create():
     template = get_template('create.html')
     menu = get_menu()
-    return template.format('', menu)
+    
+    if request.method == 'GET':
+        return template.format('', menu) + 'GET'
+    elif request.method == 'POST':
+        return template.format('', menu) + 'POST'        
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
