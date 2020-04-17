@@ -46,9 +46,14 @@ def create():
     menu = get_menu()
     
     if request.method == 'GET':
-        return template.format('', menu) + 'GET'
+        return template.format('', menu)
+    
     elif request.method == 'POST':
-        return template.format('', menu) + 'POST'        
+        # request.form['title'], request.form['desc']
+        with open(f'content/{request.form["title"]}', 'w') as f:
+            f.write(request.form['desc'])
+
+        return redirect('/')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
