@@ -1,9 +1,10 @@
 from flask import Flask
+from flask import request
 
 app = Flask("flask")
 
 def get_template(filename):
-    with open('views/'+filename, 'r', encoding="utf-8") as f:
+    with open('views/' + filename, 'r', encoding="utf-8") as f:
         template = f.read()
         
     return template
@@ -28,7 +29,11 @@ def javascript():
     template = get_template('template.html')
     return template.format('Javascript', 'Javascript is...')
 
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     template = get_template('login.html')
-    return template
+    
+    if request.method == 'GET':
+        return template + "GET"
+    elif request.method == 'POST':
+        return template + "POST"
