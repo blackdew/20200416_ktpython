@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask import request, redirect
 
@@ -7,6 +8,11 @@ members = [
     {"id": "sookbun", "pw": "111111"},
     {"id": "duru", "pw": "222222"},
 ]
+
+def get_menu():
+    menu_temp = "<li><a href='/{0}'>{0}</a></li>"
+    menu = [e for e in os.listdir('content') if e[0] != '.']
+    return "\n".join([menu_temp.format(m) for m in menu])
 
 def get_template(filename):
     with open('views/' + filename, 'r', encoding="utf-8") as f:
