@@ -40,6 +40,12 @@ def html(title):
 
     return template.format(title, content, menu)
 
+@app.route("/create", methods=['GET', 'POST'])
+def create():
+    template = get_template('create.html')
+    menu = get_menu()
+    return template.format('', menu)
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     template = get_template('login.html')
