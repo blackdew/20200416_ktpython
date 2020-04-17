@@ -7,7 +7,6 @@ def get_template(filename):
         template = f.read()
         
     return template
-    
 
 @app.route("/")
 def index():
@@ -28,3 +27,8 @@ def css():
 def javascript():
     template = get_template('template.html')
     return template.format('Javascript', 'Javascript is...')
+
+@app.route("/login")
+def login():
+    template = get_template('login.html')
+    return template
