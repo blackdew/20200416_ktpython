@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request
+from flask import request, redirect
 
 app = Flask("flask")
 
@@ -34,6 +34,6 @@ def login():
     template = get_template('login.html')
     
     if request.method == 'GET':
-        return template + "GET"
+        return template
     elif request.method == 'POST':
-        return template + "POST"
+        return redirect("/")
