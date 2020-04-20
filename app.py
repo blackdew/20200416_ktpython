@@ -83,3 +83,7 @@ def login():
             
         # 로그인 성공에는 메인으로
         return redirect("/?id=" + m[0]['id'])
+    
+@app.route("/favicon.ico")
+def favicon():
+    return abort(404)
