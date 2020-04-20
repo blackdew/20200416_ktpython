@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from flask import request, redirect, abort
 
-app = Flask("flask")
+app = Flask(__name__, static_folder="static")
 
 members = [
     {"id": "sookbun", "pw": "111111"},
