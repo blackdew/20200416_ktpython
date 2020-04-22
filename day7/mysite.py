@@ -200,15 +200,23 @@ def rating():
         '이숙번': {'1917': 5, '엽문4': 2, '라라랜드': 3, '주디': 5},
         '강두루': {'1917': 4, '라라랜드': 3, '신과나': 5},
         '이고잉': {'라라랜드': 4, '엽문4': 4, '주디': 1},
-        '정원혁': {'엽문':3, '신과나': 5, '1917': 4, '주디': 2}
+        '정원혁': {'엽문4': 3, '신과나': 5, '1917': 4, '주디': 2}
     }
     
     # 영화를 평균평점순으로 정렬
     def pivot_by_movies(ratings):
-        return [
-            ('1917', [5, 1, 3]),
-            ('엽문4', [3, 1, 2])
-        ]
+        movies = {}
+        for name, records in ratings.items():
+            for m_name, m_rate in records.items():
+                if m_name not in movies:
+                    movies[m_name] = []
+                movies[m_name].append(m_rate)
+
+        return list(movies.items())
+#         return [
+#             ('1917', [5, 1, 3]),
+#             ('엽문4', [3, 1, 2])
+#         ]
 
     movies = pivot_by_movies(ratings)
     sorted_movies = sorted(movies)
