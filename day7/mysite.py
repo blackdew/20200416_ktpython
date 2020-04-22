@@ -172,7 +172,10 @@ def findnum():
     import random
     
     def find_duplicated_num(nums):
-        return sum(nums) - sum(set(nums))
+        return sum(nums) - ((len(nums) - 1) *  (len(nums)) / 2)
+        
+#        return sum(nums) - sum(set(nums))
+    
 #         check = []
 #         for i in nums:
 #             if i not in check:
