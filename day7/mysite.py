@@ -116,9 +116,7 @@ def reject():
                            site="reject",
                            placehoder="문장을 입력해 주세요")
 
-
-@app.route('/daum/movies')
-def movies():
+def get_hit_movies():
     res = requests.get('https://movie.daum.net/boxoffice/weekly')
     soup = BeautifulSoup(res.content, 'html.parser')
 
@@ -133,7 +131,12 @@ def movies():
             '관객수': 관객수,
             '개봉일': 개봉일,
         })
+        
+    return movies
 
+@app.route('/daum/movies')
+def movies():
+    movies = get_hit_movies()
     return json.dumps(movies)
 
 # python 파일명으로 실행을 위해서 필요
