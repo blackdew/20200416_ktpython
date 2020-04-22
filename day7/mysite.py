@@ -57,5 +57,23 @@ def gugu():
                            site="gugu",
                            placehoder="num")
 
+# 사용자로부터 숫자를 N을 입력받은 후 
+# 1부터 N까지의 숫자 중 3의 배수만 출력하세요.
+@app.route('/multiple', methods=['get', 'post'])
+def multiple():
+    result = ''
+    if request.method == 'POST':
+        num = int(request.form['numbers'].strip())
+        numbers = list(range(1, num + 1))
+        result = [str(i) for i in numbers if i % 3 == 0]
+        
+    return render_template('base.html', 
+                           title="3의 배수 출력하기",
+                           result=','.join(result),
+                           site="multiple",
+                           placehoder="num")
+
+
+
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
