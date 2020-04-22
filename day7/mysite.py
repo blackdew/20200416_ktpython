@@ -115,8 +115,26 @@ def reject():
 
 @app.route('/daum/movies')
 def movies():
+    import re
     import json
+    import requests
+    from bs4 import BeautifulSoup
+
+    res = requests.get('https://movie.daum.net/boxoffice/weekly')
+    soup = BeautifulSoup(res.content, 'html.parser')
+
     movies = []
+    for tag in soup.select('.desc_boxthumb'):
+        text = tag.select(".list_state")[0].get_text()    
+        regex = re.compile("주간관객 (\d+)명\n개봉일\n([0-9.]+) 개봉")
+        관객수, 개봉일 = re.findall(regex, text)[0]
+        movies.append({
+            '제목': tag.select(".link_g")[0].get_text(),
+            '평점': tag.select(".emph_grade")[0].get_text(),
+            '관객수': 관객수,
+            '개봉일': 개봉일,
+        })
+
     return json.dumps(movies)
 
 # python 파일명으로 실행을 위해서 필요
