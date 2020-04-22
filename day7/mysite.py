@@ -141,6 +141,7 @@ def get_hit_movies(date):
 
 @app.route('/daum/movies')
 def movies():
+    week = int(request.args.get('week', '1'))
     movies = get_hit_movies(date.today())
     return json.dumps(movies)
 
