@@ -49,7 +49,7 @@ def gugu():
     if request.method == 'POST':
         number = int(request.form['numbers'].strip())
         for i in range(9):
-            result += f'{number} * {i + 1} = {number * (i + 1)} '
+            result += f'{number} * {i + 1} = {number * (i + 1)}<br>'
         
     return render_template('base.html', 
                            title="구구단 출력하기",
