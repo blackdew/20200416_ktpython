@@ -1,3 +1,7 @@
+import re
+import json
+import requests
+from bs4 import BeautifulSoup
 import requests
 from flask import Flask, render_template, request
 
@@ -115,11 +119,6 @@ def reject():
 
 @app.route('/daum/movies')
 def movies():
-    import re
-    import json
-    import requests
-    from bs4 import BeautifulSoup
-
     res = requests.get('https://movie.daum.net/boxoffice/weekly')
     soup = BeautifulSoup(res.content, 'html.parser')
 
