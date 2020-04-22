@@ -95,6 +95,17 @@ def reject():
     금지어 = ['볼드모트', '이숙번', '강두루', '이고잉']
     result = ''
     
+    if request.method == 'POST':
+        # 문자열을 text 변수에 받아서
+        text = request.form['numbers']
+        
+        # 금지어 목록에서 하나씩 단어를 가져와서 
+        for word in 금지어:
+            # 금지어를 *** 로 replace
+            text = text.replace(word, '***')
+            
+        result = text
+    
     return render_template('base.html', 
                            title="금지어 체크하기",
                            result=result,
