@@ -172,10 +172,18 @@ def findnum():
     import random
     
     def find_duplicated_num(nums):
+        check = []
+        for i in nums:
+            if i not in check:
+                check.append(i)
+            else:
+                return i
+                    
         return 0
 
-    numbers = list(range(1, 11)) 
-    numbers.insert(random.randint(1, 10), random.randint(1, 10))
+    num = int(request.args.get('num', '10'))
+    numbers = list(range(1, num + 1))
+    numbers.insert(random.randint(1, num), random.randint(1, num))
     print(numbers)
 
     num = find_duplicated_num(numbers)
