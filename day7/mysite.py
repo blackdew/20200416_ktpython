@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
@@ -25,6 +26,18 @@ def exam01():
         
     return render_template('base.html', 
                            result=result)
+
+@app.route('/daum')
+def daum():
+    res = requests.get('http://daum.net')
+    return res.text
+
+@app.route('/pub/<sub>')
+def daum_sub(sub):
+    res = requests.get(f'http://daum.net/pub/{sub}',
+                       params=request.args)
+    return res.text
+    
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
