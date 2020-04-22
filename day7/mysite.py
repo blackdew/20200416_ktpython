@@ -64,8 +64,7 @@ def multiple():
     result = ''
     if request.method == 'POST':
         num = int(request.form['numbers'].strip())
-        numbers = list(range(1, num + 1))
-        result = [str(i) for i in numbers if i % 3 == 0]
+        result = [str(i) for i in range(1, num + 1) if i % 3 == 0]
         
     return render_template('base.html', 
                            title="3의 배수 출력하기",
