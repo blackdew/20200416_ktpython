@@ -142,6 +142,17 @@ def get_hit_movies(date):
 @app.route('/daum/movies')
 def movies():
     week = int(request.args.get('week', '1'))
+
+    # weeks를 만들거에요
+    # week이 1이면, [20200415]
+    # week이 2이면, [20200415, 20200408]
+    # week이 3이면, [20200415, 20200408, 20200401]
+    weeks = []
+    w = date.today()
+    for i in range(week):
+        w = w - timedelta(days=7)
+        weeks.append(w)
+    
     movies = get_hit_movies(date.today())
     return json.dumps(movies)
 
