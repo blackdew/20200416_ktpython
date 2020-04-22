@@ -25,7 +25,7 @@ def exam01():
             result = f'가장 작은 수 {min_number}는홀수'
         
     return render_template('base.html', 
-                           title="가장 작은 수 찾기"
+                           title="가장 작은 수 찾기",
                            result=result,
                            site="exam01",
                            placehoder="num1, num2, num3")
@@ -43,9 +43,19 @@ def daum_sub(sub):
 
 # 사용자로부터 2 ~ 9 사이의 숫자를 입력 받은 후, 
 # 해당 숫자에 대한 구구단을 출력하세요.
-@app.route('/gugu')
+@app.route('/gugu', methods=['get', 'post'])
 def gugu():
-    return ""
+    result = ''
+    if request.method == 'POST':
+        number = int(request.form['numbers'].strip())
+        for i in range(9):
+            result += f'{number} * {i + 1} = {number * (i + 1)} '
+        
+    return render_template('base.html', 
+                           title="구구단 출력하기",
+                           result=result,
+                           site="gugu",
+                           placehoder="num")
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
