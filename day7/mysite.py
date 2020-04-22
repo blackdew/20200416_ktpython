@@ -1,4 +1,7 @@
+import re
+import json
 import requests
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
@@ -112,11 +115,28 @@ def reject():
                            site="reject",
                            placehoder="문장을 입력해 주세요")
 
+def get_best_movies(date):
+    res = requests.get('https://movie.daum.net/boxoffice/weekly')
+    soup = BeautifulSoup(res.content, 'html.parser')
+
+    movies = []
+    for tag in soup.select('.desc_boxthumb'):
+        text = tag.select(".list_state")[0].get_text()    
+        regex = re.compile("주간관객 (\d+)명\n개봉일\n([0-9.]+) 개봉")
+        관객수, 개봉일 = re.findall(regex, text)[0]
+        movies.append({
+            '제목': tag.select(".link_g")[0].get_text(),
+            '평점': tag.select(".emph_grade")[0].get_text(),
+            '관객수': 관객수,
+            '개봉일': 개봉일,
+        })
+    return movies
 
 @app.route('/daum/movies')
 def movies():
-    import json
-    movies = {}
+    from datetime import date
+    today = date.today()
+    movies = get_best_movies(today)
     
     return json.dumps(movies)
 
