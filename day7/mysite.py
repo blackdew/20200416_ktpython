@@ -113,5 +113,12 @@ def reject():
                            placehoder="문장을 입력해 주세요")
 
 
+@app.route('/daum/movies')
+def movies():
+    import json
+    movies = {}
+    
+    return json.dumps(movies)
+
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
