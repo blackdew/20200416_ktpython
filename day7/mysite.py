@@ -45,15 +45,15 @@ def daum_sub(sub):
 # 해당 숫자에 대한 구구단을 출력하세요.
 @app.route('/gugu', methods=['get', 'post'])
 def gugu():
-    result = ''
+    result = []
     if request.method == 'POST':
         number = int(request.form['numbers'].strip())
         for i in range(9):
-            result += f'{number} * {i + 1} = {number * (i + 1)}<br>'
+            result.append(f'{number} * {i + 1} = {number * (i + 1)}')
         
     return render_template('base.html', 
                            title="구구단 출력하기",
-                           result=result,
+                           result="<br>".join(result),
                            site="gugu",
                            placehoder="num")
 
