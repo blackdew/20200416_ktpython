@@ -116,7 +116,11 @@ def reject():
                            placehoder="문장을 입력해 주세요")
 
 def get_best_movies(date):
-    res = requests.get('https://movie.daum.net/boxoffice/weekly')
+    # https://movie.daum.net/boxoffice/weekly?startDate=20200302
+    res = requests.get(
+        'https://movie.daum.net/boxoffice/weekly',
+        params={'startDate': date.strftime('%Y%m%d')}
+    )
     soup = BeautifulSoup(res.content, 'html.parser')
 
     movies = []
@@ -134,9 +138,14 @@ def get_best_movies(date):
 
 @app.route('/daum/movies')
 def movies():
-    from datetime import date
+    from datetime import date, timedelta
     today = date.today()
-    movies = get_best_movies(today)
+    
+    movies = {}
+    movies[today.strftime('%Y%m%d')] = get_best_movies(today)
+    
+    last_week = today - timedelta(days=7)
+    movies[last_week.strftime('%Y%m%d')] = get_best_movies(last_week)
     
     return json.dumps(movies)
 
