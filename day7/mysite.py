@@ -162,9 +162,10 @@ def movies():
 @app.route('/naver/realtime')
 def realtime():
     realtime = []
-    res = requests.get("http://naver.com")
+    res = requests.get("https://www.naver.com/srchrank?frm=main&ag=40s&gr=4&ma=-2&si=0&en=0&sp=0")
+    result = res.json()
     
-    return json.dumps(realtime)
+    return json.dumps(result['data'])
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
