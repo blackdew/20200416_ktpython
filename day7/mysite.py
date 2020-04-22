@@ -72,6 +72,22 @@ def multiple():
                            site="multiple",
                            placehoder="num")
 
+# *트리 출력
+@app.route('/tree', methods=['get', 'post'])
+def tree():
+    # "&nbsp;"
+    result = []
+    for i in range(5):
+        row = ""
+        for j in range(i + 1):
+            row += '*'
+        result.append(row)
+    
+    return render_template('base.html', 
+                           title="* 트리 출력하기",
+                           result="<br>".join(result),
+                           site="tree",
+                           placehoder="num")
 
 
 # python 파일명으로 실행을 위해서 필요
