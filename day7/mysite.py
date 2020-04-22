@@ -30,14 +30,13 @@ def exam01():
 @app.route('/daum')
 def daum():
     res = requests.get('http://daum.net')
-    return res.text
+    return res.text.replace('https://t1.daumcdn.net/daumtop_chanel/op/20170315064553027.png', 'https://ssl.pstatic.net/sstatic/search/nlogo/20200421102755.png')
 
 @app.route('/pub/<sub>')
 def daum_sub(sub):
     res = requests.get(f'http://daum.net/pub/{sub}',
                        params=request.args)
     return res.text
-    
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
