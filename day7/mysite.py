@@ -89,6 +89,18 @@ def tree():
                            site="tree",
                            placehoder="num")
 
+# 금지어 체크
+@app.route('/reject', methods=['get', 'post'])
+def reject():
+    금지어 = ['볼드모트', '이숙번', '강두루', '이고잉']
+    result = ''
+    
+    return render_template('base.html', 
+                           title="금지어 체크하기",
+                           result=result,
+                           site="reject",
+                           placehoder="문장을 입력해 주세요")
+
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
