@@ -205,7 +205,10 @@ def rating():
     
     # 영화를 평균평점순으로 정렬
     def pivot_by_movies(ratings):
-        return []
+        return [
+            ('1917', [5, 1, 3]),
+            ('엽문4', [3, 1, 2])
+        ]
 
     movies = pivot_by_movies(ratings)
     sorted_movies = sorted(movies)
