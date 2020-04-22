@@ -1,6 +1,7 @@
 import re
 import json
 import requests
+from datetime import date
 from bs4 import BeautifulSoup
 import requests
 from flask import Flask, render_template, request
@@ -116,8 +117,12 @@ def reject():
                            site="reject",
                            placehoder="문장을 입력해 주세요")
 
-def get_hit_movies():
-    res = requests.get('https://movie.daum.net/boxoffice/weekly')
+def get_hit_movies(date):
+    # https://movie.daum.net/boxoffice/weekly?startDate=20200408
+    res = requests.get(
+        'https://movie.daum.net/boxoffice/weekly',
+        params={'startDate': date.strftime("%Y%m%d")}
+    )
     soup = BeautifulSoup(res.content, 'html.parser')
 
     movies = []
@@ -136,7 +141,7 @@ def get_hit_movies():
 
 @app.route('/daum/movies')
 def movies():
-    movies = get_hit_movies()
+    movies = get_hit_movies(date.today())
     return json.dumps(movies)
 
 # python 파일명으로 실행을 위해서 필요
