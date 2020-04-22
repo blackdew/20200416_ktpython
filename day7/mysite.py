@@ -194,5 +194,22 @@ def findnum():
     return str(numbers) + '<br>' + str(num)
 
 
+@app.route('/rating')
+def rating():
+    ratings = {
+        '이숙번': {'1917': 5, '엽문4': 2, '라라랜드': 3, '주디': 5},
+        '강두루': {'1917': 4, '라라랜드': 3, '신과나': 5},
+        '이고잉': {'라라랜드': 4, '엽문4': 4, '주디': 1},
+        '정원혁': {'엽문':3, '신과나': 5, '1917': 4, '주디': 2}
+    }
+    
+    # 영화를 평균평점순으로 정렬
+    def pivot_by_movies(ratings):
+        return []
+
+    movies = pivot_by_movies(ratings)
+    sorted_movies = sorted(movies)
+    return str(sorted_movies)
+
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
