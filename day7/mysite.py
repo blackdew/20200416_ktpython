@@ -12,11 +12,19 @@ def index():
 
 @app.route("/exam01", methods=['get', 'post'])
 def exam01():
+    result = ''
     if request.method == 'POST':
         result = request.form['numbers']
+        result = [int(s.strip()) for s in result.split(',')]
+        min_number = min(result)
+        
+        if min_number % 2 == 0:
+            result = f'가장 작은 수 {min_number}는 짝수'
+        else:
+            result = f'가장 작은 수 {min_number}는홀수'
         
     return render_template('base.html', 
-                           result="어쩌고저쩌고")
+                           result=result)
 
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
