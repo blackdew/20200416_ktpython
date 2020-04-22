@@ -219,7 +219,9 @@ def rating():
 #         ]
 
     movies = pivot_by_movies(ratings)
-    sorted_movies = sorted(movies)
+    sorted_movies = sorted(movies, 
+                           key=lambda x: sum(x[1]) / len(x[1]),
+                           reverse=True)
     return str(sorted_movies)
 
 # python 파일명으로 실행을 위해서 필요
