@@ -1,7 +1,4 @@
-import re
-import json
 import requests
-from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
@@ -115,38 +112,11 @@ def reject():
                            site="reject",
                            placehoder="문장을 입력해 주세요")
 
-def get_best_movies(date):
-    # https://movie.daum.net/boxoffice/weekly?startDate=20200302
-    res = requests.get(
-        'https://movie.daum.net/boxoffice/weekly',
-        params={'startDate': date.strftime('%Y%m%d')}
-    )
-    soup = BeautifulSoup(res.content, 'html.parser')
-
-    movies = []
-    for tag in soup.select('.desc_boxthumb'):
-        text = tag.select(".list_state")[0].get_text()    
-        regex = re.compile("주간관객 (\d+)명\n개봉일\n([0-9.]+) 개봉")
-        관객수, 개봉일 = re.findall(regex, text)[0]
-        movies.append({
-            '제목': tag.select(".link_g")[0].get_text(),
-            '평점': tag.select(".emph_grade")[0].get_text(),
-            '관객수': 관객수,
-            '개봉일': 개봉일,
-        })
-    return movies
 
 @app.route('/daum/movies')
 def movies():
-    from datetime import date, timedelta
-    today = date.today()
-    
-    movies = {}
-    movies[today.strftime('%Y%m%d')] = get_best_movies(today)
-    
-    last_week = today - timedelta(days=7)
-    movies[last_week.strftime('%Y%m%d')] = get_best_movies(last_week)
-    
+    import json
+    movies = []
     return json.dumps(movies)
 
 # python 파일명으로 실행을 위해서 필요
