@@ -159,5 +159,12 @@ def movies():
         
     return json.dumps(movies)
 
+@app.route('/naver/realtime')
+def realtime():
+    realtime = []
+    res = requests.get("http://naver.com")
+    
+    return json.dumps(realtime)
+
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
