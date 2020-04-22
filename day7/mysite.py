@@ -167,5 +167,20 @@ def realtime():
     
     return json.dumps(result['data'])
 
+@app.route("/findnum")
+def findnum():
+    import random
+    
+    def find_duplicated_num(nums):
+        return 0
+
+    numbers = list(range(1, 11)) 
+    numbers.insert(random.randint(1, 10), random.randint(1, 10))
+    print(numbers)
+
+    num = find_duplicated_num(numbers)
+    return str(numbers) + '<br>' + str(num)
+
+
 # python 파일명으로 실행을 위해서 필요
 app.run(port=8001)
