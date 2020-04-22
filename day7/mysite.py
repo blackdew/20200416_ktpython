@@ -1,7 +1,7 @@
 import re
 import json
 import requests
-from datetime import date
+from datetime import date, timedelta
 from bs4 import BeautifulSoup
 import requests
 from flask import Flask, render_template, request
@@ -152,8 +152,11 @@ def movies():
     for i in range(week):
         w = w - timedelta(days=7)
         weeks.append(w)
-    
-    movies = get_hit_movies(date.today())
+
+    movies = {}
+    for w in weeks:
+        movies[w.strftime("%Y%m%d")] = get_hit_movies(w)
+        
     return json.dumps(movies)
 
 # python 파일명으로 실행을 위해서 필요
