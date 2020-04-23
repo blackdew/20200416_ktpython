@@ -82,11 +82,15 @@ def login():
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
         m = [e for e in members if e['id'] == request.form['id']]
         if len(m) == 0:
-            return template.format("<p>회원이 아닙니다.</p>", menu)
+            return render_template('login.html', 
+                                   message="<p>회원이 아닙니다.</p>", 
+                                   menu=menu)
         
         # 만약 패스워드가 다르면, "패스워드를 확인해 주세요"라고 알려주자
         if request.form['pw'] != m[0]['pw']:
-            return template.format("<p>패스워드를 확인해 주세요</p>", menu)
+            return render_template('login.html', 
+                                   message="<p>패스워드를 확인해 주세요</p>", 
+                                   menu=menu)
             
         # 로그인 성공에는 메인으로
         return redirect("/?id=" + m[0]['id'])
