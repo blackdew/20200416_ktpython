@@ -21,7 +21,7 @@ def verify_jumin():
                  for num1, num2 in zip(jumin[:-1], verifies)]
         check_num = 11 - (sum(check) % 11)
         
-        if check_num == jumin[-1]:
+        if check_num % 10 == jumin[-1]:
             result = True
         else:
             result = False
