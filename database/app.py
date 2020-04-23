@@ -72,12 +72,7 @@ def delete(title):
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-    if request.method == 'GET':
-        return render_template('create.html', 
-                               message='', 
-                               menu=get_menu())
-    
-    elif request.method == 'POST':
+    if request.method == 'POST':
         cursor = db.cursor()
         sql = f"""
             insert into topic (title, description, created, author_id)
@@ -88,6 +83,10 @@ def create():
         db.commit()
 
         return redirect('/')
+    
+    return render_template('create.html', 
+                           message='', 
+                           menu=get_menu())
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
