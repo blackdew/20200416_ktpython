@@ -77,7 +77,7 @@ def create():
         sql = f"""
             insert into topic (title, description, created, author_id)
             values ('{request.form['title']}', '{request.form['desc']}',
-                    '{datetime.now()}', '4')
+                    '{datetime.now()}', '{session['user']['id']}')
         """
         cursor.execute(sql)
         db.commit()
