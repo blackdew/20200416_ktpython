@@ -17,11 +17,9 @@ def verify_jumin():
         jumin = request.form['jumin'].replace('-', '')
         jumin = [int(c) for c in list(jumin)]
         
-        check_num = 0
-        for i, num in enumerate(jumin[:-1]):
-            check_num += num * verifies[i]
-            
-        check_num = 11 - (check_num % 11)
+        check = [num1 * num2 
+                 for num1, num2 in zip(jumin[:-1], verifies)]
+        check_num = 11 - (sum(check) % 11)
         
         if check_num == jumin[-1]:
             result = True
