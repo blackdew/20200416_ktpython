@@ -1,8 +1,10 @@
 import os
-from flask import Flask
+from flask import Flask, render_template
 from flask import request, redirect, abort
 
-app = Flask(__name__, static_folder="static")
+app = Flask(__name__, 
+            static_folder="static",
+            template_folder="views")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 
@@ -71,7 +73,10 @@ def login():
     menu = get_menu()
     
     if request.method == 'GET':
-        return template.format("", menu)
+        return render_template('login.html', 
+                               message="", 
+                               menu=menu)
+        # return template.format("", menu)
     
     elif request.method == 'POST':
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
