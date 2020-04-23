@@ -100,7 +100,12 @@ def login():
         # 로그인 성공에는 메인으로
         session['user'] = m[0]
         return redirect("/")
-    
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect('/')
+
 @app.route("/favicon.ico")
 def favicon():
     return abort(404)
