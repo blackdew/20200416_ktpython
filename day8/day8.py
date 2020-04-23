@@ -1,4 +1,5 @@
 import requests
+from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
@@ -20,9 +21,11 @@ def crawler_naver(word):
         "query": word
     }
     response = requests.get(url, params=query)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    tags = soup.select('img._img')
     
     return render_template('crawler.html', 
-                           result=response.text)
+                           result=tags[0].prettify())
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])
