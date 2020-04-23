@@ -41,7 +41,6 @@ def index():
 
 @app.route("/<title>")
 def html(title):
-    template = get_template('template.html')
     menu = get_menu()
     
     if title not in menu:
@@ -50,7 +49,10 @@ def html(title):
     with open(f'content/{title}', 'r') as f:
         content = f.read()
 
-    return template.format(title, content, menu)
+    return render_template('template.html',
+                           title=title,
+                           content=content,
+                           menu=menu)
 
 @app.route("/delete/<title>")
 def delete(title):
