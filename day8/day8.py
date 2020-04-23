@@ -36,8 +36,8 @@ def crawler_naver(word):
         download_img_from_tag(tag, filename)
         filenames.append(filename)
     
-    return render_template('crawler.html', 
-                           result=str(filenames))
+    return render_template('crawler.html',
+                           files=filenames)
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])

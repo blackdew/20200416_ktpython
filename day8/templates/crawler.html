@@ -1,2 +1,3 @@
-{{ result }}<br>
-<img src='/{{ result }}'>
+{% for file in files %}
+    <img src='/{{ file }}'>
+{% endfor %}
