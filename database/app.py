@@ -20,11 +20,6 @@ db = pymysql.connect(
     cursorclass=pymysql.cursors.DictCursor
 )
 
-members = [
-    {"id": "sookbun", "pw": "111111"},
-    {"id": "duru", "pw": "222222"},
-]
-
 def get_menu():
     cursor = db.cursor()
     cursor.execute("select id, title from topic")
@@ -41,7 +36,7 @@ def get_template(filename):
 @app.route("/")
 def index():    
     if 'user' in session:
-        title = 'Welcome ' + session['user']['id']
+        title = 'Welcome ' + session['user']['name']
     else:
         title = 'Welcome'
         
@@ -97,16 +92,27 @@ def create():
 def login():
     message = ""
     if request.method == 'POST':
-        m = [e for e in members if e['id'] == request.form['id']]
+        cursor = db.cursor()
+        cursor.execute(f"""
+            select id, name, profile, password from author 
+            where name = '{request.form['id']}'""")
+        user = cursor.fetchone()
         
-        if len(m) == 0:
+        if user is None:
             message = "<p>회원이 아닙니다.</p>"
-        elif request.form['pw'] != m[0]['pw']:
-            message = "<p>패스워드를 확인해 주세요</p>"
         else:
-            # 로그인 성공에는 메인으로
-            session['user'] = m[0]
-            return redirect("/")
+            cursor.execute(f"""
+            select id, name, profile, password from author 
+            where name = '{request.form['id']}' and 
+                  password = SHA2('{request.form['pw']}', 256)""")
+            user = cursor.fetchone()
+            
+            if user is None:
+                message = "<p>패스워드를 확인해 주세요</p>"
+            else:
+                # 로그인 성공에는 메인으로
+                session['user'] = user
+                return redirect("/")
     
     return render_template('login.html', 
                            message=message, 
