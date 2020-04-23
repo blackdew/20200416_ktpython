@@ -30,7 +30,11 @@ def index():
     id = request.args.get('id', '')
     template = get_template('template.html')
     
-    title = 'Welcome ' + id
+    if 'user' in session:
+        title = 'Welcome ' + session['user']['id']
+    else:
+        title = 'Welcome'
+        
     content = 'Welcome Python Class...'
     menu = get_menu()
     return template.format(title, content, menu)
