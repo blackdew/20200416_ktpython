@@ -108,4 +108,10 @@ def logout():
 def favicon():
     return abort(404)
 
+@app.route("/dbtest")
+def dbtest():
+    cursor = db.cursor()
+    cursor.execute("select * from topic")
+    return str(cursor.fetchall())
+
 app.run(port=8008)
