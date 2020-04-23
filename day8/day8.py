@@ -2,7 +2,9 @@ import requests
 from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 
-app = Flask(__name__, template_folder="templates")
+app = Flask(__name__, 
+            template_folder="templates",
+            static_folder="static")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 
@@ -26,11 +28,12 @@ def crawler_naver(word):
     img_url = tags[0]['data-source']
     
     res_img = requests.get(img_url)
-    with open(f'{word}0.jpg', 'wb') as f:
+    filename = f'static/{word}0.jpg'
+    with open(filename, 'wb') as f:
         f.write(res_img.content)
     
     return render_template('crawler.html', 
-                           result=img_url)
+                           result=filename)
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])
