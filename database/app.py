@@ -25,10 +25,12 @@ members = [
 ]
 
 def get_menu():
-    menu_temp = "<li><a href='/{0}'>{0}</a></li>"
-    menu = [e for e in os.listdir('content') if e[0] != '.']
-    return "\n".join([menu_temp.format(m) for m in menu])
-
+    cursor = db.cursor()
+    cursor.execute("select id, title from topic")
+    menu = [f"<li><a href='/{row['id']}'>{row['title']}</a></li>"
+            for row in cursor.fetchall()]
+    return '\n'.join(menu)
+    
 def get_template(filename):
     with open('views/' + filename, 'r', encoding="utf-8") as f:
         template = f.read()
