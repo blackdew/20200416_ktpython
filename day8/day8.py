@@ -23,9 +23,10 @@ def crawler_naver(word):
     response = requests.get(url, params=query)
     soup = BeautifulSoup(response.content, 'html.parser')
     tags = soup.select('img._img')
+    img_url = tags[0]['data-source']
     
     return render_template('crawler.html', 
-                           result=tags[0].prettify())
+                           result=img_url)
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])
