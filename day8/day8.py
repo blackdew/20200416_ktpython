@@ -29,12 +29,15 @@ def crawler_naver(word):
     soup = BeautifulSoup(response.content, 'html.parser')
     tags = soup.select('img._img')
 
-    # tag를 던지면 이미지를 저장하고 이미지명을 반환
-    filename = f'static/{word}0.jpg'
-    download_img_from_tag(tags[0], word)
+    filenames = []
+    for i, tag in enumerate(tags):
+        # tag를 던지면 이미지를 저장하고 이미지명을 반환
+        filename = f'static/{word}{i}.jpg'
+        download_img_from_tag(tag, filename)
+        filenames.append(filename)
     
     return render_template('crawler.html', 
-                           result=filename)
+                           result=str(filenames))
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])
