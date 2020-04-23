@@ -1,4 +1,5 @@
 import os
+import pymysql
 from flask import Flask, render_template
 from flask import request, redirect, abort, session
 
@@ -8,6 +9,15 @@ app = Flask(__name__,
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
 app.secret_key = 'sookbun'
+
+db = pymysql.connect(
+    user='root',
+    passwd='',
+    host='localhost',
+    db='web',
+    charset='utf8',
+    cursorclass=pymysql.cursors.DictCursor
+)
 
 members = [
     {"id": "sookbun", "pw": "111111"},
@@ -74,11 +84,10 @@ def create():
 def login():
     message = ""
     if request.method == 'POST':
-        # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
         m = [e for e in members if e['id'] == request.form['id']]
+        
         if len(m) == 0:
             message = "<p>회원이 아닙니다.</p>"
-        # 만약 패스워드가 다르면, "패스워드를 확인해 주세요"라고 알려주자
         elif request.form['pw'] != m[0]['pw']:
             message = "<p>패스워드를 확인해 주세요</p>"
         else:
