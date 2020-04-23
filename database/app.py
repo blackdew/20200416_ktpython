@@ -47,6 +47,7 @@ def index():
         
     content = 'Welcome Python Class...'
     return render_template('template.html',
+                           id="",
                            title=title,
                            content=content,
                            menu=get_menu())
@@ -61,13 +62,17 @@ def html(id):
         abort(404)
 
     return render_template('template.html',
+                           id=topic['id'],
                            title=topic['title'],
                            content=topic['description'],
                            menu=get_menu())
 
-@app.route("/delete/<title>")
-def delete(title):
-    os.remove(f"content/{title}")
+@app.route("/delete/<id>")
+def delete(id):
+    cursor = db.cursor()
+    cursor.execute(f"delete from topic where id='{id}'")
+    db.commit()
+    
     return redirect("/")
 
 @app.route("/create", methods=['GET', 'POST'])
