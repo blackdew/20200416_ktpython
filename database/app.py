@@ -1,12 +1,13 @@
 import os
 from flask import Flask, render_template
-from flask import request, redirect, abort
+from flask import request, redirect, abort, session
 
 app = Flask(__name__, 
             static_folder="static",
             template_folder="views")
 app.config['ENV'] = 'development'
 app.config['DEBUG'] = True
+app.secret_key = 'sookbun'
 
 members = [
     {"id": "sookbun", "pw": "111111"},
@@ -93,7 +94,8 @@ def login():
                                    menu=menu)
             
         # 로그인 성공에는 메인으로
-        return redirect("/?id=" + m[0]['id'])
+        session['user'] = m[0]
+        return redirect("/")
     
 @app.route("/favicon.ico")
 def favicon():
