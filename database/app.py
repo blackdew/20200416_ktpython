@@ -81,19 +81,18 @@ def login():
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
         m = [e for e in members if e['id'] == request.form['id']]
         if len(m) == 0:
-            return render_template('login.html', 
-                                   message="<p>회원이 아닙니다.</p>", 
-                                   menu=get_menu())
-        
+            message = "<p>회원이 아닙니다.</p>"
         # 만약 패스워드가 다르면, "패스워드를 확인해 주세요"라고 알려주자
-        if request.form['pw'] != m[0]['pw']:
-            return render_template('login.html', 
-                                   message="<p>패스워드를 확인해 주세요</p>", 
-                                   menu=get_menu())
-            
-        # 로그인 성공에는 메인으로
-        session['user'] = m[0]
-        return redirect("/")
+        elif request.form['pw'] != m[0]['pw']:
+            message = "<p>패스워드를 확인해 주세요</p>"
+        else:
+            # 로그인 성공에는 메인으로
+            session['user'] = m[0]
+            return redirect("/")
+    
+        return render_template('login.html', 
+                               message=message, 
+                               menu=get_menu())
 
 @app.route('/logout')
 def logout():
