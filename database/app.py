@@ -50,17 +50,18 @@ def index():
                            content=content,
                            menu=get_menu())
 
-@app.route("/<title>")
-def html(title):
-    if title not in menu:
-        return abort(404)
-
-    with open(f'content/{title}', 'r') as f:
-        content = f.read()
+@app.route("/<id>")
+def html(id):
+    cursor = db.cursor()
+    cursor.execute(f"select * from topic where id = '{id}'")
+    topic = cursor.fetchone()
+    
+    if topic is None:
+        abort(404)
 
     return render_template('template.html',
-                           title=title,
-                           content=content,
+                           title=topic['title'],
+                           content=topic['description'],
                            menu=get_menu())
 
 @app.route("/delete/<title>")
