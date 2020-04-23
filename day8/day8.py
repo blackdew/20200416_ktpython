@@ -1,3 +1,4 @@
+import requests
 from flask import Flask, render_template, request
 
 app = Flask(__name__, template_folder="templates")
@@ -11,8 +12,17 @@ def index():
 @app.route('/crawler/naver/<word>')
 def crawler_naver(word):
     result = ''
+
+    url = f"https://search.naver.com/search.naver"
+    query = {
+        "where": "image",
+        "sm": "tab_jum",
+        "query": word
+    }
+    response = requests.get(url, params=query)
+    
     return render_template('crawler.html', 
-                           result=result)
+                           result=response.text)
 
 
 @app.route('/verify_jumin', methods=['get', 'post'])
