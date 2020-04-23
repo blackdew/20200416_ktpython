@@ -72,12 +72,8 @@ def create():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        return render_template('login.html', 
-                               message="", 
-                               menu=get_menu())
-    
-    elif request.method == 'POST':
+    message = ""
+    if request.method == 'POST':
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
         m = [e for e in members if e['id'] == request.form['id']]
         if len(m) == 0:
@@ -90,9 +86,9 @@ def login():
             session['user'] = m[0]
             return redirect("/")
     
-        return render_template('login.html', 
-                               message=message, 
-                               menu=get_menu())
+    return render_template('login.html', 
+                           message=message, 
+                           menu=get_menu())
 
 @app.route('/logout')
 def logout():
