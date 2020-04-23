@@ -26,10 +26,7 @@ def get_template(filename):
     return template
 
 @app.route("/")
-def index():
-    id = request.args.get('id', '')
-    template = get_template('template.html')
-    
+def index():    
     if 'user' in session:
         title = 'Welcome ' + session['user']['id']
     else:
@@ -37,7 +34,10 @@ def index():
         
     content = 'Welcome Python Class...'
     menu = get_menu()
-    return template.format(title, content, menu)
+    return render_template('template.html',
+                           title=title,
+                           content=content,
+                           menu=menu)
 
 @app.route("/<title>")
 def html(title):
@@ -74,7 +74,6 @@ def create():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    template = get_template('login.html')
     menu = get_menu()
     
     if request.method == 'GET':

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>WEB - {0}</title>
+    <title>WEB - {{ title }}</title>
     <meta charset="utf-8">
     <link type="text/css" rel="stylesheet" href="/static/style.css">
 </head>
 <body>
     <h1><a href="/">WEB</a></h1>
     <ol>
-{2}
+{{ menu | safe }}
     </ol>
     <div>
         <a href="/login">login</a>
@@ -16,7 +16,7 @@
         <a href="/delete/{0}">delete</a>
     </div>
     
-    <h2>{0}</h2>
-    {1}
+    <h2>{{ title }}</h2>
+    {{ content }}
 </body>
 </html>
