@@ -14,7 +14,10 @@ def index():
 
 @app.route('/crawler/naver/<word>')
 def crawler_naver(word):
-    result = ''
+    def download_img_from_tag(tag, filename):
+        response = requests.get(tag['data-source'])
+        with open(filename, 'wb') as f:
+            f.write(response.content)
 
     url = f"https://search.naver.com/search.naver"
     query = {
@@ -25,12 +28,10 @@ def crawler_naver(word):
     response = requests.get(url, params=query)
     soup = BeautifulSoup(response.content, 'html.parser')
     tags = soup.select('img._img')
-    img_url = tags[0]['data-source']
-    
-    res_img = requests.get(img_url)
+
+    # tag를 던지면 이미지를 저장하고 이미지명을 반환
     filename = f'static/{word}0.jpg'
-    with open(filename, 'wb') as f:
-        f.write(res_img.content)
+    download_img_from_tag(tags[0], word)
     
     return render_template('crawler.html', 
                            result=filename)
