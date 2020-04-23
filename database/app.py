@@ -33,16 +33,13 @@ def index():
         title = 'Welcome'
         
     content = 'Welcome Python Class...'
-    menu = get_menu()
     return render_template('template.html',
                            title=title,
                            content=content,
-                           menu=menu)
+                           menu=get_menu())
 
 @app.route("/<title>")
 def html(title):
-    menu = get_menu()
-    
     if title not in menu:
         return abort(404)
 
@@ -52,7 +49,7 @@ def html(title):
     return render_template('template.html',
                            title=title,
                            content=content,
-                           menu=menu)
+                           menu=get_menu())
 
 @app.route("/delete/<title>")
 def delete(title):
@@ -61,12 +58,10 @@ def delete(title):
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-    menu = get_menu()
-    
     if request.method == 'GET':
         return render_template('create.html', 
                                message='', 
-                               menu=menu)
+                               menu=get_menu())
     
     elif request.method == 'POST':
         # request.form['title'], request.form['desc']
@@ -77,12 +72,10 @@ def create():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    menu = get_menu()
-    
     if request.method == 'GET':
         return render_template('login.html', 
                                message="", 
-                               menu=menu)
+                               menu=get_menu())
     
     elif request.method == 'POST':
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
@@ -90,13 +83,13 @@ def login():
         if len(m) == 0:
             return render_template('login.html', 
                                    message="<p>회원이 아닙니다.</p>", 
-                                   menu=menu)
+                                   menu=get_menu())
         
         # 만약 패스워드가 다르면, "패스워드를 확인해 주세요"라고 알려주자
         if request.form['pw'] != m[0]['pw']:
             return render_template('login.html', 
                                    message="<p>패스워드를 확인해 주세요</p>", 
-                                   menu=menu)
+                                   menu=get_menu())
             
         # 로그인 성공에는 메인으로
         session['user'] = m[0]
