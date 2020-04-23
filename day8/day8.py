@@ -8,6 +8,13 @@ app.config['DEBUG'] = True
 def index():
     return "welcome, day8 class"
 
+@app.route('/crawler/naver/<word>')
+def crawler_naver(word):
+    result = ''
+    return render_template('crawler.html', 
+                           result=result)
+
+
 @app.route('/verify_jumin', methods=['get', 'post'])
 def verify_jumin():
     result = ''
