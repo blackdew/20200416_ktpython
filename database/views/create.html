@@ -7,7 +7,7 @@
 <body>
     <h1><a href="/">WEB</a></h1>
     <ol>
-{{ menu }}
+{{ menu | safe }}
     </ol>
     <h2>Create</h2>
     <form action="/create" method="post">

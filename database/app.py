@@ -1,5 +1,6 @@
 import os
 import pymysql
+from datetime import datetime
 from flask import Flask, render_template
 from flask import request, redirect, abort, session
 
@@ -77,9 +78,14 @@ def create():
                                menu=get_menu())
     
     elif request.method == 'POST':
-        # request.form['title'], request.form['desc']
-        with open(f'content/{request.form["title"]}', 'w') as f:
-            f.write(request.form['desc'])
+        cursor = db.cursor()
+        sql = f"""
+            insert into topic (title, description, created, author_id)
+            values ('{request.form['title']}', '{request.form['desc']}',
+                    '{datetime.now()}', '4')
+        """
+        cursor.execute(sql)
+        db.commit()
 
         return redirect('/')
 
