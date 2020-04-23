@@ -25,6 +25,10 @@ def crawler_naver(word):
     tags = soup.select('img._img')
     img_url = tags[0]['data-source']
     
+    res_img = requests.get(img_url)
+    with open(f'{word}0.jpg', 'wb') as f:
+        f.write(res_img.content)
+    
     return render_template('crawler.html', 
                            result=img_url)
 
