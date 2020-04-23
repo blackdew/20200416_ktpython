@@ -61,11 +61,12 @@ def delete(title):
 
 @app.route("/create", methods=['GET', 'POST'])
 def create():
-    template = get_template('create.html')
     menu = get_menu()
     
     if request.method == 'GET':
-        return template.format('', menu)
+        return render_template('create.html', 
+                               message='', 
+                               menu=menu)
     
     elif request.method == 'POST':
         # request.form['title'], request.form['desc']
@@ -82,7 +83,6 @@ def login():
         return render_template('login.html', 
                                message="", 
                                menu=menu)
-        # return template.format("", menu)
     
     elif request.method == 'POST':
         # 만약 회원이 아니면, "회원이 아닙니다."라고 알려주자
