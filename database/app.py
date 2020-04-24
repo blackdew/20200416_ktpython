@@ -149,7 +149,7 @@ def author_list():
 def author(author_id):
     cursor = db.cursor()
     
-    if methods == 'GET':
+    if request.method == 'GET':
         cursor.execute(f"select * from author where id = {author_id}")
         author = cursor.fetchone()
 
@@ -157,9 +157,9 @@ def author(author_id):
             return jsonify(author)
         else:
             return abort(404)
-    elif methods == 'PUT':
+    elif request.method == 'PUT':
         return jsonify({"success": True})
-    elif methods == 'DELETE':
+    elif request.method == 'DELETE':
         return jsonify({"success": True})
     
     return abort(405)
