@@ -161,7 +161,7 @@ def author(author_id):
         sql = f"""update author set
                   name = '{request.form['name']}',
                   profile = '{request.form['profile']}',
-                  password = SHA2('{request.form['password']}', 256))
+                  password = SHA2('{request.form['password']}', 256)
                   where id = '{author_id}'"""
         cursor.execute(sql)
         
