@@ -128,11 +128,23 @@ def dbtest():
 ## restful API
 
 @app.route("/api/author")
-def author():
+def author_list():
     cursor = db.cursor()
     cursor.execute("select * from author")
     
     return jsonify(cursor.fetchall())
+
+@app.route("/api/author/<author_id>")
+def author(author_id):
+    cursor = db.cursor()
+    cursor.execute(f"select * from author where id = {author_id}")
+    author = cursor.fetchone()
+    
+    if author:
+        return jsonify(author)
+    else:
+        return abort(404)
+
 
 
 app.run(port=8008)
