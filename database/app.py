@@ -141,7 +141,7 @@ def author_list():
         cursor.execute(sql)
         db.commit()
         
-        return jonify({"success": True})
+        return jsonify({"success": True})
     
     return abort(405)
 
