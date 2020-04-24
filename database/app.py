@@ -127,12 +127,23 @@ def dbtest():
 ######################
 ## restful API
 
-@app.route("/api/author")
+@app.route("/api/author", methods=['get', 'post'])
 def author_list():
     cursor = db.cursor()
-    cursor.execute("select * from author")
     
-    return jsonify(cursor.fetchall())
+    if request.method == 'GET':
+        cursor.execute("select * from author")    
+        return jsonify(cursor.fetchall())
+    elif request.method == 'POST':
+        sql = f"""insert into author (name, profile, password)
+                  values ('{request.form['name']}', '{request.form['profile']}',
+                  SHA2('{request.form['password']}', 256))"""
+        cursor.execute(sql)
+        db.commit()
+        
+        return jonify({"success": True})
+    
+    return abort(405)
 
 @app.route("/api/author/<author_id>")
 def author(author_id):
