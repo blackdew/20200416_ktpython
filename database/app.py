@@ -158,9 +158,9 @@ def author(author_id):
         else:
             return abort(404)
     elif methods == 'PUT':
-        return jonify({"success": True})
+        return jsonify({"success": True})
     elif methods == 'DELETE':
-        return jonify({"success": True})
+        return jsonify({"success": True})
     
     return abort(405)
 
