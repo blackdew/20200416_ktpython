@@ -175,12 +175,17 @@ def author(author_id):
     
     return abort(405)
 
+@app.route("/api/topic")
 @app.route("/api/author/<author_id>/topic")
-def topic_list(author_id):
+def topic_list(author_id=None):
     cursor = db.cursor()
-    cursor.execute(f"""select A.id, A.title, A.description, A.created, A.author_id
-                       from topic A, author B 
-                       where A.author_id = B.id and B.id = '{author_id}'""")    
+    
+    if author_id is None:
+        cursor.execute("select * from topic")
+    else:
+        cursor.execute(f"""select A.id, A.title, A.description, A.created, A.author_id
+                           from topic A, author B 
+                           where A.author_id = B.id and B.id = '{author_id}'""")    
     return jsonify(cursor.fetchall())
 
 app.run(port=8008)
