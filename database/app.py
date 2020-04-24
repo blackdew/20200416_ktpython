@@ -2,7 +2,7 @@ import os
 import pymysql
 from datetime import datetime
 from flask import Flask, render_template
-from flask import request, redirect, abort, session
+from flask import request, redirect, abort, session, jsonify
 
 app = Flask(__name__, 
             static_folder="static",
@@ -123,5 +123,16 @@ def dbtest():
     cursor = db.cursor()
     cursor.execute("select * from topic")
     return str(cursor.fetchall())
+
+######################
+## restful API
+
+@app.route("/api/author")
+def author():
+    cursor = db.cursor()
+    cursor.execute("select * from author")
+    
+    return jsonify(cursor.fetchall())
+
 
 app.run(port=8008)
