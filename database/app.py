@@ -145,17 +145,24 @@ def author_list():
     
     return abort(405)
 
-@app.route("/api/author/<author_id>")
+@app.route("/api/author/<author_id>", methods=['get', 'put', 'delete'])
 def author(author_id):
     cursor = db.cursor()
-    cursor.execute(f"select * from author where id = {author_id}")
-    author = cursor.fetchone()
     
-    if author:
-        return jsonify(author)
-    else:
-        return abort(404)
+    if methods == 'GET':
+        cursor.execute(f"select * from author where id = {author_id}")
+        author = cursor.fetchone()
 
+        if author:
+            return jsonify(author)
+        else:
+            return abort(404)
+    elif methods == 'PUT':
+        return jonify({"success": True})
+    elif methods == 'DELETE':
+        return jonify({"success": True})
+    
+    return abort(405)
 
 
 app.run(port=8008)
