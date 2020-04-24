@@ -158,7 +158,14 @@ def author(author_id):
         else:
             return abort(404)
     elif request.method == 'PUT':
-        return jsonify({"success": True})
+        sql = f"""update author set
+                  name = '{request.form['name']}',
+                  profile = '{request.form['profile']}',
+                  password = SHA2('{request.form['password']}', 256))
+                  where id = '{author_id}'"""
+        cursor.execute(sql)
+        
+        return jsonify({"success": db.commit()})
     elif request.method == 'DELETE':
         return jsonify({"success": True})
     
