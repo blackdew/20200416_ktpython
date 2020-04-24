@@ -169,6 +169,8 @@ def author(author_id):
         return jsonify({"success": True})
     
     elif request.method == 'DELETE':
+        cursor.execute(f"delete from author where id = '{author_id}'")
+        db.commit()
         return jsonify({"success": True})
     
     return abort(405)
