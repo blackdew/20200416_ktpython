@@ -26,19 +26,10 @@ def get_menu():
     menu = [f"<li><a href='/{row['id']}'>{row['title']}</a></li>"
             for row in cursor.fetchall()]
     return '\n'.join(menu)
-    
-def get_template(filename):
-    with open('views/' + filename, 'r', encoding="utf-8") as f:
-        template = f.read()
-        
-    return template
 
 @app.route("/")
 def index():    
-    if 'user' in session:
-        title = 'Welcome ' + session['user']['name']
-    else:
-        title = 'Welcome'
+    title = 'Welcome ' + session['user']['name'] if 'user' in session else 'Welcome'
         
     content = 'Welcome Python Class...'
     return render_template('template.html',
@@ -48,7 +39,7 @@ def index():
                            menu=get_menu())
 
 @app.route("/<id>")
-def html(id):
+def content(id):
     cursor = db.cursor()
     cursor.execute(f"select * from topic where id = '{id}'")
     topic = cursor.fetchone()
@@ -73,7 +64,7 @@ def delete(id):
 @app.route("/create", methods=['GET', 'POST'])
 def create():
     if request.method == 'POST':
-        cursor = db.cursor()
+        cursor = db.cursor() 
         sql = f"""
             insert into topic (title, description, created, author_id)
             values ('{request.form['title']}', '{request.form['desc']}',
