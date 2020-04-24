@@ -157,6 +157,7 @@ def author(author_id):
             return jsonify(author)
         else:
             return abort(404)
+
     elif request.method == 'PUT':
         sql = f"""update author set
                   name = '{request.form['name']}',
@@ -165,7 +166,6 @@ def author(author_id):
                   where id = '{author_id}'"""
         cursor.execute(sql)
         db.commit()
-        
         return jsonify({"success": True})
     
     elif request.method == 'DELETE':
@@ -175,5 +175,12 @@ def author(author_id):
     
     return abort(405)
 
+@app.route("/api/author/<author_id>/topic")
+def topic_list(author_id):
+    cursor = db.cursor()
+    cursor.execute(f"""select A.id, A.title, A.description, A.created, A.author_id
+                       from topic A, author B 
+                       where A.author_id = B.id and B.id = '{author_id}'""")    
+    return jsonify(cursor.fetchall())
 
 app.run(port=8008)
