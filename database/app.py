@@ -164,8 +164,10 @@ def author(author_id):
                   password = SHA2('{request.form['password']}', 256)
                   where id = '{author_id}'"""
         cursor.execute(sql)
+        db.commit()
         
-        return jsonify({"success": db.commit()})
+        return jsonify({"success": True})
+    
     elif request.method == 'DELETE':
         return jsonify({"success": True})
     
